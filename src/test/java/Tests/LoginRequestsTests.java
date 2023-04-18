@@ -1,14 +1,6 @@
 package Tests;
 
-import Backend.RequestObject.RequestLogin.RequestPostUser;
-import Backend.RequestObject.RequestMethodType;
-import Backend.RequestObject.RequestURLType;
-import Backend.ResponseObject.ResponseBodyType;
-import Backend.ResponseObject.ResponseCodeType;
-import Backend.ResponseObject.ResponseHelper;
 import ShareData.Hooks;
-import io.restassured.response.Response;
-import org.testng.annotations.Test;
 
 public class LoginRequestsTests extends Hooks {
 
