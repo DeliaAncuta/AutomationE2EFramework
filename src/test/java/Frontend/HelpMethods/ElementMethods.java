@@ -28,6 +28,14 @@ public class ElementMethods {
         element.click();
     }
 
+    public void forceWait(int value){
+        try {
+            Thread.sleep(value);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //Metoda sa astepte
     public void waitElementVisible(WebElement element){
         WebDriverWait waitExplicit = new WebDriverWait(driver, Duration.ofSeconds(10));

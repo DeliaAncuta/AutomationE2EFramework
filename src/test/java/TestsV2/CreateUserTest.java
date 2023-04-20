@@ -7,7 +7,7 @@ import Backend.ResponseObject.ResponseBodyType;
 import Backend.ResponseObject.ResponseCodeType;
 import Backend.ResponseObject.ResponseHelper;
 import Frontend.Pages.LoginPage;
-import Frontend.Pages.ProfilPage;
+import Frontend.Pages.ProfilePage;
 import ShareData.Hooks;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
@@ -29,9 +29,9 @@ public class CreateUserTest extends Hooks {
         LoginPage loginPage = new LoginPage(getDriver());
         loginPage.LoginValid(loginSuccess);
 
-        ProfilPage profilPage = new ProfilPage(getDriver());
-        profilPage.validateLogin(loginSuccess);
-        profilPage.logOut();
+        ProfilePage profilePage = new ProfilePage(getDriver());
+        profilePage.validateLogin(loginSuccess);
+        profilePage.logOut();
 
         loginPage.validateLoginMessage();
 

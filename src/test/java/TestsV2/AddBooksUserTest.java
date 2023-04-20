@@ -12,10 +12,12 @@ import Backend.ResponseObject.ResponseHelper;
 import Backend.ResponseObject.ResponseLogin.ResponseUserSuccess;
 import Backend.ResponseObject.ResponseToken.ResponseTokenSuccess;
 import Frontend.Pages.LoginPage;
+import Frontend.Pages.ProfilePage;
 import ShareData.Hooks;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,12 +33,30 @@ public class AddBooksUserTest extends Hooks {
 
         String username = "probaItSchool" + System.currentTimeMillis();
         String password = "Cityslicka123@#!";
+        List<ISBNObject> expectedListIsbns = Arrays.asList(new ISBNObject("9781449325862"),new ISBNObject("9781449331818"));
+        System.out.println("Step 1");
         var RequestObject = GetPostUser(username, password);
+        System.out.println("Step 2");
         PostTokenUser(username, password);
-        PostBooksUser(Arrays.asList(new ISBNObject("9781449325862"),new ISBNObject("9781449331818")));
+        System.out.println("Step 3");
+        PostBooksUser(expectedListIsbns);
+
+        //punem un threadsleep pt ca problema de replicare intre 2 componente web
 
         LoginPage loginPage = new LoginPage(getDriver());
         loginPage.LoginValid(RequestObject);
+
+        ProfilePage profilePage = new ProfilePage(getDriver());
+        profilePage.validateLogin(RequestObject);
+        profilePage.validateProfileBooks(getListStringISBN(expectedListIsbns));
+    }
+
+    public List<String> getListStringISBN(List<ISBNObject> expectedListIsbns){
+        List<String> expected = new ArrayList<>();
+        for(Integer i = 0; i<expectedListIsbns.size(); i++){
+            expected.add(expectedListIsbns.get(i).getIsbn());
+        }
+        return expected;
     }
 
     public RequestPostUser GetPostUser(String username, String password){

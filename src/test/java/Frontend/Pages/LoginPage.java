@@ -28,10 +28,14 @@ public class LoginPage extends BasePage {
 
 
     public void LoginValid(RequestPostUser requestPostUser){
+        element.forceWait(3000);
+
+        element.scrollByPixel(0, 400);
 
         element.fillElement(userName , requestPostUser.getUserName());
 
         element.fillElement(parola, requestPostUser.getPassword());
+
 
         element.clickElement(Login);
     }
