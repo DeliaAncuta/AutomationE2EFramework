@@ -1,4 +1,4 @@
-package TestsV2;
+package Tests;
 
 import Backend.RequestObject.RequestBooks.ISBNObject;
 import Backend.RequestObject.RequestBooks.RequestPostBooks;
@@ -9,7 +9,7 @@ import Backend.RequestObject.RequestUser.RequestPostUser;
 import Backend.ResponseObject.ResponseBodyType;
 import Backend.ResponseObject.ResponseCodeType;
 import Backend.ResponseObject.ResponseHelper;
-import Backend.ResponseObject.ResponseLogin.ResponseUserSuccess;
+import Backend.ResponseObject.ResponseLogin.ResponseLoginSuccess;
 import Backend.ResponseObject.ResponseToken.ResponseTokenSuccess;
 import Frontend.Pages.LoginPage;
 import Frontend.Pages.ProfilePage;
@@ -33,7 +33,7 @@ public class AddBooksUserTest extends Hooks {
 
         String username = "probaItSchool" + System.currentTimeMillis();
         String password = "Cityslicka123@#!";
-        List<ISBNObject> expectedListIsbns = Arrays.asList(new ISBNObject("9781449325862"),new ISBNObject("9781449331818"));
+        List<ISBNObject> expectedListIsbns = Arrays.asList(new ISBNObject("9781449325862"),new ISBNObject("9781449331818"), new ISBNObject("9781449365035"), new ISBNObject("9781593275846"));
         System.out.println("Step 1");
         var RequestObject = GetPostUser(username, password);
         System.out.println("Step 2");
@@ -49,6 +49,9 @@ public class AddBooksUserTest extends Hooks {
         ProfilePage profilePage = new ProfilePage(getDriver());
         profilePage.validateLogin(RequestObject);
         profilePage.validateProfileBooks(getListStringISBN(expectedListIsbns));
+        profilePage.deleteRandomProfileBook(getListStringISBN(expectedListIsbns));
+        profilePage.deleteAccount();
+        loginPage.LoginInvalid(RequestObject);
     }
 
     public List<String> getListStringISBN(List<ISBNObject> expectedListIsbns){
@@ -66,8 +69,7 @@ public class AddBooksUserTest extends Hooks {
 
         responseHelper = new ResponseHelper(response);
         responseHelper.validateResponse(ResponseBodyType.RESPONSE_USER, ResponseCodeType.STATUS_201);
-        responseHelper.printResponseBody();
-        var responseObject = responseHelper.getSpecificObject(ResponseUserSuccess.class);
+        var responseObject = responseHelper.getSpecificObject(ResponseLoginSuccess.class);
         userID = responseObject.getUserID();
         return loginSuccess;
     }
@@ -79,7 +81,6 @@ public class AddBooksUserTest extends Hooks {
 
         responseHelper = new ResponseHelper(response);
         responseHelper.validateResponse(ResponseBodyType.RESPONSE_TOKEN, ResponseCodeType.STATUS_200);
-        responseHelper.printResponseBody();
 
         var responseObject = responseHelper.getSpecificObject(ResponseTokenSuccess.class);
         Token = responseObject.getToken();
@@ -92,7 +93,6 @@ public class AddBooksUserTest extends Hooks {
 
         responseHelper = new ResponseHelper(response);
         responseHelper.validateResponse(ResponseBodyType.RESPONSE_BOOKS, ResponseCodeType.STATUS_201);
-        responseHelper.printResponseBody();
     }
 
 

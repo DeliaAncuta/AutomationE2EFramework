@@ -10,7 +10,6 @@ public class Hooks extends ShareData{
 
     public RequestHelper requestHelper;
     public ResponseHelper responseHelper;
-    public String baseURL = "https://bookstore.toolsqa.com";
 
 
 
@@ -24,7 +23,7 @@ public class Hooks extends ShareData{
     }
 
     @AfterMethod
-    public void clearEnviroment(){ //listener din testng
+    public void clearEnviroment(){
 
         //clearBrowser();
     }

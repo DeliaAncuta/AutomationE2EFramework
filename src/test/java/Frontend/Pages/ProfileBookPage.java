@@ -1,6 +1,5 @@
 package Frontend.Pages;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

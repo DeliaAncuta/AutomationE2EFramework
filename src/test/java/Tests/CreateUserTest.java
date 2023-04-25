@@ -1,4 +1,4 @@
-package TestsV2;
+package Tests;
 
 import Backend.RequestObject.RequestUser.RequestPostUser;
 import Backend.RequestObject.RequestMethodType;
@@ -24,7 +24,6 @@ public class CreateUserTest extends Hooks {
 
         responseHelper = new ResponseHelper(response);
         responseHelper.validateResponse(ResponseBodyType.RESPONSE_USER, ResponseCodeType.STATUS_201);
-        responseHelper.printResponseBody();
 
         LoginPage loginPage = new LoginPage(getDriver());
         loginPage.LoginValid(loginSuccess);

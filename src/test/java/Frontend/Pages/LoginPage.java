@@ -4,6 +4,7 @@ import Backend.RequestObject.RequestUser.RequestPostUser;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
 
 public class LoginPage extends BasePage {
 
@@ -21,6 +22,10 @@ public class LoginPage extends BasePage {
     @FindBy(xpath="//h5")
     private WebElement LoginMessage;
 
+    @FindBy(css="#name")
+    private WebElement InvalidMessage;
+
+
     public LoginPage(WebDriver driver) {
         super(driver);
     }
@@ -28,7 +33,7 @@ public class LoginPage extends BasePage {
 
 
     public void LoginValid(RequestPostUser requestPostUser){
-        element.forceWait(3000);
+        element.forceWait(1000);
 
         element.scrollByPixel(0, 400);
 
@@ -38,6 +43,20 @@ public class LoginPage extends BasePage {
 
 
         element.clickElement(Login);
+    }
+
+    public void LoginInvalid(RequestPostUser requestPostUser){
+
+
+        element.scrollByPixel(0, 400);
+
+        element.fillElement(userName , requestPostUser.getUserName());
+
+        element.fillElement(parola, requestPostUser.getPassword());
+
+
+        element.clickElement(Login);
+        Assert.assertTrue(InvalidMessage.isDisplayed());
     }
 
     public void validateLoginMessage(){

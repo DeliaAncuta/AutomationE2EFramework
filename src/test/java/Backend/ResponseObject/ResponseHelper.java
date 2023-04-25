@@ -1,24 +1,24 @@
 package Backend.ResponseObject;
 
+import Backend.APIHelper;
 import Backend.ResponseObject.ResponseBooks.ResponseBooksSuccess;
 import Backend.ResponseObject.ResponseLogin.ResponseLoginFailed;
-import Backend.ResponseObject.ResponseLogin.ResponseUserSuccess;
+import Backend.ResponseObject.ResponseLogin.ResponseLoginSuccess;
 import Backend.ResponseObject.ResponseToken.ResponseTokenSuccess;
 import io.restassured.response.Response;
-import io.restassured.response.ResponseBody;
 import org.testng.Assert;
 
 public class ResponseHelper {
 
     private Response response;
+    private final APIHelper apiHelper = new APIHelper();
 
     public ResponseHelper(Response response) {
         this.response = response;
     }
 
-    public void validateResponseCode(Integer expected){
-        System.out.println(response.getStatusCode());
-        Assert.assertEquals(response.getStatusCode(), (int) expected); //am facut asta ca aternativa la sugestie intelig
+    private void validateResponseCode(Integer expected){
+        Assert.assertEquals(response.getStatusCode(), (int) expected);
     }
 
     public void validateResponse(String ResponseType, Integer ResponseCode, String Expected){
@@ -30,19 +30,9 @@ public class ResponseHelper {
                     ResponseFailed.validateResponse(Expected);
                     break;
             }
-
         }
-        /*if (ResponseType.equals(ResponseBodyType.RESPONSE_REGISTER)) {
-            switch (ResponseCode) {
-                case 400:
-                    ResponseRegisterFailed ResponseRegisterFailed = response.getBody().as(Backend.ResponseObject.ResponseToken.ResponseRegisterFailed.class);
-                    ResponseRegisterFailed.validateResponse(Expected);
-                    break;
-            }
-        }*/
+        apiHelper.printResponseInfo(response);
     }
-    //System.out.println(response.getStatusCode());
-        //Assert.assertEquals(response.getStatusCode(), (int) ResponseCode);
 
 
     public void validateResponse(String ResponseType, Integer ResponseCode) {
@@ -51,11 +41,10 @@ public class ResponseHelper {
         if (ResponseType.equals(ResponseBodyType.RESPONSE_USER)) {
             switch (ResponseCode) {
                 case 201:
-                    ResponseUserSuccess ResponseUserSuccess = response.getBody().as(Backend.ResponseObject.ResponseLogin.ResponseUserSuccess.class);
-                    ResponseUserSuccess.validateResponse();
+                    ResponseLoginSuccess ResponseLoginSuccess = response.getBody().as(ResponseLoginSuccess.class);
+                    ResponseLoginSuccess.validateResponse();
                     break;
             }
-
         }
 
         if (ResponseType.equals(ResponseBodyType.RESPONSE_TOKEN)) {
@@ -76,7 +65,7 @@ public class ResponseHelper {
                     break;
             }
         }
-
+        apiHelper.printResponseInfo(response);
     }
 
     //metoda generica
@@ -84,8 +73,4 @@ public class ResponseHelper {
         return response.getBody().as(Klass);
     }
 
-    public void printResponseBody() {
-        ResponseBody body = response.getBody();
-        System.out.println(body.asString());
-    }
 }

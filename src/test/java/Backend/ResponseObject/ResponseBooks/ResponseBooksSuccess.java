@@ -16,7 +16,6 @@ public class ResponseBooksSuccess implements ResponseValidator {
         Assert.assertNotNull(books);
     }
 
-    //conceptul de nested
 
 
 

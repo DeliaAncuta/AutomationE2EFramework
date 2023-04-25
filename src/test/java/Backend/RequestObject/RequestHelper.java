@@ -26,23 +26,9 @@ public class RequestHelper {
         request.basePath(endPoint);
 
         switch (requestType) {
-            case "get":
-                response = request.get();
-                break;
             case "post":
                 request.body(body);
                 response = request.post();
-                break;
-            case "put":
-                request.body(body);
-                response = request.put();
-                break;
-            case "patch":
-                request.body(body);
-                response = request.patch();
-                break;
-            case "delete":
-                response = request.delete();
                 break;
         }
         Assert.assertNotNull(response, "Request is not perform!!");

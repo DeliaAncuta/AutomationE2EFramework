@@ -8,7 +8,7 @@ import org.testng.Assert;
 import java.util.List;
 
 @Getter
-public class ResponseUserSuccess implements ResponseValidator {
+public class ResponseLoginSuccess implements ResponseValidator {
 
     @JsonProperty("userID")
     private String userID;
